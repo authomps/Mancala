@@ -1,14 +1,20 @@
+var img_board_background;
 var img_main;
 var img_side;
+var img_main_focus;
 
 function preloader() {
 	if (document.images) {
 
+		img_board_background = new Image();
 		img_main = new Image();
 		img_side = new Image();
+		img_main_focus = new Image();
 
+		img_board_background.src = "resources/pink_wall.jpg"
 		img_main.src = "resources/template_main.png";
 		img_side.src = "resources/template_side.png";
+		img_main_focus.src = "resources/template_main_focus.png";
 	}
 }
 preloader();
@@ -90,7 +96,7 @@ function draw() {
 
 				ctx.beginPath();
 				ctx.arc(x,y,10,0,2*Math.PI);
-				ctx.fillStyle = "rgb(" + getRandomInt(0,235) + "," + getRandomInt(0,235) + "," + getRandomInt(0,235) + ")";
+				ctx.fillStyle = "rgb(" + getRandomInt(0,255) + "," + getRandomInt(0,255) + "," + getRandomInt(0,255) + ")";
 				ctx.fill();
 		   	}
 
@@ -98,6 +104,11 @@ function draw() {
 			ctx.fillStyle = "#000000";
 			ctx.font="25px Helvetica";
 			ctx.fillText(houses[i],3,20);
+
+			// Tie the DOM events for each canvas to a function
+			house.onmouseover = mouse_over;
+			house.onmouseout = mouse_out;
+			// house.onclick = on_click;
 		}
 
 		// Offset
@@ -109,14 +120,61 @@ function draw() {
 		}
 		house.style.position = "relative";
 
-		// Tie the DOM events for each canvas to a function
-		// c.onmouseover = mouse_over;
-		// c.onmouseout = mouse_out;
-		// c.onclick = on_click;
-
 		// Add to document
 		document.getElementById("game").appendChild(house);
 	}
 }
 
-window.onload = function() {draw();};
+function mouse_over() {
+	var house = document.getElementById(this.id);
+	var ctx = house.getContext('2d');
+
+	ctx.drawImage(img_main_focus,0,0);
+}
+
+function mouse_out() {
+	var house = document.getElementById(this.id);
+	var ctx = house.getContext('2d');
+
+	ctx.drawImage(img_main,0,0);
+}
+
+// function pickturn(){
+// 		var difference = (this.id.substring(this.id.length - 1))%3;
+// 		var amt = 0;
+// 		if(difference == 1)
+// 			amt = 0;
+// 		else if(difference == 2)
+// 			amt = 1;
+// 		else
+// 			amt = 2;
+		
+// 		if(turn%2 == 1){
+// 			var n = document.getElementById(this.id);
+// 			var ntx=n.getContext('2d');
+// 			ntx.fillStyle='#0278CC';
+// 			ntx.fillRect(3%3+amt,0,148,148);
+// 			ntx.fillStyle='#000000';
+// 			ntx.font = "134px Arial"
+// 			ntx.fillText("X",30,125);
+// 			ntx.fillStyle='#0278CC';	
+// 		}
+// 		else{
+// 			var n = document.getElementById(this.id);
+// 			var ntx=n.getContext('2d');
+// 			ntx.fillStyle='#FF0000';
+// 			ntx.fillRect(3%3+amt,0,148,148);
+// 			ntx.fillStyle='#000000';
+// 			ntx.font = "134px Arial"
+// 			ntx.fillText("O",23,125);
+// 			ntx.fillStyle='#FF0000';
+// 		}
+// 	}
+// }
+
+window.onload = function() {
+	draw();
+	var game = document.getElementById('game');
+	game.style.maxHeight = "300px";
+	game.style.backgroundImage = "url(" + img_board_background.src + ")";
+};
