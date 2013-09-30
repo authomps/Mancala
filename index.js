@@ -11,7 +11,7 @@ function preloader() {
 		img_side = new Image();
 		img_main_focus = new Image();
 
-		img_board_background.src = "resources/pink_wall.jpg"
+		img_board_background.src = "resources/baige.png";
 		img_main.src = "resources/template_main.png";
 		img_side.src = "resources/template_side.png";
 		img_main_focus.src = "resources/template_main_focus.png";
@@ -31,14 +31,11 @@ var y_side_min = 50;
 var y_side_max = 269;
 
 var houses = new Array();
+for (i=1; i<14; i++) {
+	houses[i] = 4;
+}
 houses[0] = 0;
-for (i=1; i<7; i++) {
-	houses[i] = 4;
-}
 houses[7] = 0;
-for (i=8; i<14; i++) {
-	houses[i] = 4;
-}
 
 // Helper functions
 function getRandomInt (min, max) {
