@@ -56,5 +56,8 @@ html, body {
 #footer {
 	border: solid #000 5px;
 	background-color: #BCDEFF;
+	border-radius:25px;
+	margin-top: 25px;
+	padding-left: 15px;
 	border-radius:25px;	
 }
