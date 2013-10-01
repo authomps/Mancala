@@ -3,6 +3,7 @@ var img_board_background;
 var img_main;
 var img_side;
 var img_main_focus;
+var img_main_error;
 
 // Preload images
 function preloader() {
@@ -12,11 +13,13 @@ function preloader() {
 		img_main = new Image();
 		img_side = new Image();
 		img_main_focus = new Image();
+		img_main_error = new Image();
 
 		img_board_background.src = "resources/baige.png";
 		img_main.src = "resources/template_main.png";
 		img_side.src = "resources/template_side.png";
 		img_main_focus.src = "resources/template_main_focus.png";
+		img_main_error.src = "resources/template_main_error.png";
 	}
 }
 preloader();
@@ -150,29 +153,25 @@ function draw() {
 	}
 }
 
+// DOM event functions
 function mouse_over() {
 	var house = document.getElementById(this.id);
 	var ctx = house.getContext('2d');
 
-	if(player1_turn && this.id < 7) {
-		//Display bad image
-	}
-	else if(!player1_turn && this.id > 7) {
-		//Display bad image
+	if((player1_turn && this.id < 7) || (!player1_turn && this.id > 7)) {
+		ctx.drawImage(img_main_error,0,0);
 	}
 	else {
 		ctx.drawImage(img_main_focus,0,0);
 	}
 
 }
-
 function mouse_out() {
 	var house = document.getElementById(this.id);
 	var ctx = house.getContext('2d');
 
 	ctx.drawImage(img_main,0,0);
 }
-
 function mouse_click() {
 	var house = document.getElementById(this.id);
 	var ctx = house.getContext('2d');
@@ -189,6 +188,7 @@ function mouse_click() {
 
 }
 
+// Moves beads for a player's turn
 function playerTurn(pos) {
 
 	//Check if valid turn, ie, the selected container has beads
@@ -197,15 +197,18 @@ function playerTurn(pos) {
 		return;
 	}
 
+	// Get amount of beads and get int value of pos
 	var beads = houses[pos];
 	houses[pos] = 0;
 	pos_int = parseInt(pos);
 
+	// current index
 	current_index = (pos_int + 1)%14;	
 
+	// loop until all beads are gone
 	for(i = 0; i < beads; current_index++) {
 		current_index = current_index%14;
-		//Check if player turn and bank match up
+		// Check if player is over his bank or other player's bank
 		if(current_index == 0 && player1_turn) {
 			houses[current_index] += 1;
 			i++;
@@ -219,10 +222,12 @@ function playerTurn(pos) {
 			i++;
 		}
 	}
+	// Check if player goes again or gets beads
 	checkBonus(current_index-1);
 
 	//Check for end of game
 	if( checkEmpty() ) {
+		// Add beads remaining to players' store
 		for(i = 1; i < 7; i++) {
 			houses[7] += houses[i];
 			houses[i] = 0;
@@ -231,18 +236,23 @@ function playerTurn(pos) {
 			houses[0] += houses[i];
 			houses[i] = 0;
 		}
+
+		// Output winner dialogue
 		if(houses[0] > houses[7]) {
-			console.log("player 1 wins");
+			document.getElementById("display").innerHTML = "!!! Player 1 wins !!!";
 		}
 		else {
-			console.log("player 2 wins");
+			document.getElementById("display").innerHTML = "!!! Player 2 wins !!!";
 		}
+		document.getElementById("display").className = "game_over";
 	}
 
+	// redraw html
 	document.getElementById("game").innerHTML = "";
 	draw();
 }
 
+// Check if player gets a bonus
 function checkBonus(pos) {
 
 	if(pos == 7 || pos ==0) {
@@ -254,7 +264,6 @@ function checkBonus(pos) {
 			houses[0] += houses[14-pos] + houses[pos];
 			houses[pos] = 0;
 			houses[14-pos] = 0;
-			//MEGA KILL
 		}
 		else if(!player1_turn && pos < 7 ) {
 			houses[7] += houses[14-pos] + houses[pos];
@@ -264,8 +273,16 @@ function checkBonus(pos) {
 	}
 
 	player1_turn = !player1_turn;
+	if (player1_turn) {
+		document.getElementById("display").innerHTML = "Player 1's Turn";
+	document.getElementById("display").className = "player1";
+	} else {
+		document.getElementById("display").innerHTML = "Player 2's Turn";
+	document.getElementById("display").className = "player2";
+	}
 }
 
+// Check if either side of the board has no beads
 function checkEmpty() {
 	var bot_empty = true;
 	var top_empty = true;
@@ -284,6 +301,7 @@ function checkEmpty() {
 	return (bot_empty || top_empty);
 }
 
+// Called when window loads
 window.onload = function() {
 	draw();
 	var game = document.getElementById('game');
