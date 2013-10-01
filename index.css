@@ -13,18 +13,16 @@ html, body {
 }
 
 #header {
-	font-size: 48px;
+	font-size: 36px;
 	text-align: center;
 	margin: 10px auto;
 	height: 50px;
+	margin-bottom: 50px;
 	
 }
 
 #game {
 	border: solid #000 0px;
-}
-
-#main {
 }
 
 #footer {
