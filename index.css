@@ -16,7 +16,7 @@ html, body {
 #Title {
 	border: solid #000 5px;
 	background-color: #BCDEFF;
-	border-radius:25px;	
+	border-radius:25px;
 }
 
 #header {
@@ -25,15 +25,15 @@ html, body {
 	text-align: center;
 	margin: 10px auto;
 	height: 50px;
-	margin-bottom: 50px;
 	font-weight: bold;
+	margin-bottom: 50px;
 	
 }
 
 #p1bank {
-	margin-top: 0px;
+	margin-top: 20px;
 	margin-left: -2px;
-	margin-bottom: 35px;
+	margin-bottom: 6px;
 	-webkit-transform:rotate(-3deg);
 	-moz-transform:rotate(-3deg);
 	transform:rotate(-3deg);
@@ -49,6 +49,7 @@ html, body {
 
 h2 {
 	margin: 0px;
+	margin-bottom: 6px;
 }
 
 h3 {
@@ -59,9 +60,6 @@ h3 {
 	border: solid #000 5px;
 	box-shadow: 10px 10px 5px #888;
 	border-radius:25px;	
-}
-
-#player1, #player2 {
 }
 
 #reset {
