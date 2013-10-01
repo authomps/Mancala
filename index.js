@@ -31,13 +31,14 @@ var y_side_min = 50;
 var y_side_max = 269;
 
 
-var board = new Array();
 var houses = new Array();
 for (i=1; i<14; i++) {
-	houses[i] = i;
+	houses[i] = 4;
 }
 houses[0] = 0;
 houses[7] = 0;
+
+var player1_turn = true;
 
 // Helper functions
 function getRandomInt (min, max) {
@@ -61,15 +62,18 @@ function convertIndex(i) {
 function draw() {
 	// Draw each house and store
 	for (i=0; i<14; i++) {
+
+		var index = convertIndex(i);
+
 		// Create canvas element
 		var house = document.createElement("canvas");
-		house.setAttribute('id','house'+i);
+		house.setAttribute('id',index);
 
 		// Get context
 		var ctx=house.getContext('2d');
 
 		// Draw image on canvas
-		if (i == 0 || i == 7) {
+		if (index == 0 || index == 7) {
 			house.setAttribute('width',width/8);
 			house.setAttribute('height',height);
 			house.className = "store";
@@ -78,7 +82,7 @@ function draw() {
 		    ctx.drawImage(img_side,0,0);
 
 		    // Draw beads
-		    for(j=0; j<houses[i]; j++) {
+		    for(j=0; j<houses[index]; j++) {
 		    	var x = getRandomInt(x_side_min, x_side_max);
 		    	var y = getRandomInt(y_side_min, y_side_max);
 
@@ -91,7 +95,7 @@ function draw() {
 		    // Draw number
 			ctx.fillStyle = "#000000";
 			ctx.font="25px Helvetica";
-			ctx.fillText(houses[i],63,35);
+			ctx.fillText(houses[index],63,35);
 
 		} else {
 			house.setAttribute('width',width/8);
@@ -102,7 +106,7 @@ function draw() {
 		    ctx.drawImage(img_main,0,0);
 		    
 		    // Draw beads
-		    for(j=0; j<houses[i]; j++) {
+		    for(j=0; j<houses[index]; j++) {
 		    	var x = getRandomInt(x_main_min, x_main_max);
 		    	var y = getRandomInt(y_main_min, y_main_max);
 
@@ -115,20 +119,22 @@ function draw() {
 		   	// Draw number
 			ctx.fillStyle = "#000000";
 			ctx.font="25px Helvetica";
-			ctx.fillText(houses[i],3,20);
+			ctx.fillText(houses[index],3,20);
 
 			// Tie the DOM events for each canvas to a function
 			house.onmouseover = mouse_over;
 			house.onmouseout = mouse_out;
+			house.onclick = mouse_click;
 			// house.onclick = on_click;
 		}
 
 		// Offset
-		if (i > 0 && i < 7) {
-			house.style.top = "-150px";
-		} else if (i > 7) {
+		if (index > 0 && index < 7) {
 			house.style.left = "150px";
 			house.style.top = "-154px";
+
+		} else if (index > 7) {
+			house.style.top = "-150px";
 		}
 		house.style.position = "relative";
 
@@ -141,7 +147,13 @@ function mouse_over() {
 	var house = document.getElementById(this.id);
 	var ctx = house.getContext('2d');
 
-	ctx.drawImage(img_main_focus,0,0);
+	if(player1_turn && this.id < 7) {
+		
+	}
+	else {
+		ctx.drawImage(img_main_focus,0,0);
+	}
+
 }
 
 function mouse_out() {
@@ -149,6 +161,58 @@ function mouse_out() {
 	var ctx = house.getContext('2d');
 
 	ctx.drawImage(img_main,0,0);
+}
+
+function mouse_click() {
+	var house = document.getElementById(this.id);
+	var ctx = house.getContext('2d');
+
+	if(player1_turn && this.id < 7) {
+		//Display error	
+	} 
+	else if(!player1_turn && this.id < 7) {
+		//Display error
+	}
+	else {
+		playerTurn(this.id);
+	}
+
+}
+
+function playerTurn(pos) {
+
+	var beads = houses[pos];
+	houses[pos] = 0;
+	pos_int = parseInt(pos);
+	//Check if valid turn
+	current_index = (pos_int + 1)%14;
+	console.log(current_index);
+	// current_index = pos;
+
+	for(i = 0; i < beads; current_index++) {
+		current_index = current_index%14;
+		console.log(!player1_turn);
+		console.log(current_index);
+		//Check if player turn and bank match up
+		if(current_index == 0 && player1_turn) {
+			houses[current_index] += 1;
+			// console.log(current_index);
+			i++;
+		}
+		else if(current_index == 7 && !player1_turn) {
+			houses[current_index] += 1;
+			i++;
+		}
+		else if(current_index != 0 && current_index != 7){
+			houses[current_index] += 1;
+			// console.log(current_index);
+			i++;
+		}
+		// current_index++;
+	}
+	document.getElementById("game").innerHTML = "";
+	draw();
+	//Check for end of game
 }
 
 // function pickturn(){
