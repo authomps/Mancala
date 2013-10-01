@@ -36,6 +36,9 @@ html, body {
 	border-radius:25px;	
 }
 
+#player1, #player2 {
+}
+
 #reset {
 	margin-left: 555px;
 	display: inline-block;
