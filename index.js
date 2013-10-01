@@ -1,8 +1,10 @@
+// Declare image variables
 var img_board_background;
 var img_main;
 var img_side;
 var img_main_focus;
 
+// Preload images
 function preloader() {
 	if (document.images) {
 
@@ -19,6 +21,7 @@ function preloader() {
 }
 preloader();
 
+// Width and heigh variables
 var width = 1200;
 var height = 300;
 var x_main_min = 30;
@@ -30,7 +33,7 @@ var x_side_max = 115;
 var y_side_min = 50;
 var y_side_max = 269;
 
-
+// Houses array
 var houses = new Array();
 for (i=1; i<14; i++) {
 	houses[i] = 4;
@@ -38,13 +41,17 @@ for (i=1; i<14; i++) {
 houses[0] = 0;
 houses[7] = 0;
 
+// Player turn variable
 var player1_turn = true;
 
-// Helper functions
+//// Helper functions
+
+// Generates random integer betwen range min and max
 function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Converts index i from child process creation to board order index
 function convertIndex(i) {
 	if(i == 0 || i == 7)  {
 		return i;
@@ -213,9 +220,27 @@ function playerTurn(pos) {
 		}
 	}
 	checkBonus(current_index-1);
+
+	//Check for end of game
+	if( checkEmpty() ) {
+		for(i = 1; i < 7; i++) {
+			houses[7] += houses[i];
+			houses[i] = 0;
+		}
+		for(i = 8; i < 14; i++) {
+			houses[0] += houses[i];
+			houses[i] = 0;
+		}
+		if(houses[0] > houses[7]) {
+			console.log("player 1 wins");
+		}
+		else {
+			console.log("player 2 wins");
+		}
+	}
+
 	document.getElementById("game").innerHTML = "";
 	draw();
-	//Check for end of game
 }
 
 function checkBonus(pos) {
@@ -223,9 +248,6 @@ function checkBonus(pos) {
 	if(pos == 7 || pos ==0) {
 		return;
 	}
-
-
-	console.log(pos);
 	
 	if(houses[pos] == 1 && houses[14-pos] != 0) {
 		if(player1_turn && pos > 7) {
@@ -245,51 +267,22 @@ function checkBonus(pos) {
 }
 
 function checkEmpty() {
+	var bot_empty = true;
+	var top_empty = true;
 	for(i=1; i < 7; i++) {
 		if(houses[i] != 0) {
-			return false;
+			bot_empty = false;
 		}
 	}
+
 	for(i=8; i < 14; i++) {
 		if(houses[i] != 0) {
-			return false;
+			top_empty = false;
 		}
 	}
-	return true;
-}
 
-// function pickturn(){
-// 		var difference = (this.id.substring(this.id.length - 1))%3;
-// 		var amt = 0;
-// 		if(difference == 1)
-// 			amt = 0;
-// 		else if(difference == 2)
-// 			amt = 1;
-// 		else
-// 			amt = 2;
-		
-// 		if(turn%2 == 1){
-// 			var n = document.getElementById(this.id);
-// 			var ntx=n.getContext('2d');
-// 			ntx.fillStyle='#0278CC';
-// 			ntx.fillRect(3%3+amt,0,148,148);
-// 			ntx.fillStyle='#000000';
-// 			ntx.font = "134px Arial"
-// 			ntx.fillText("X",30,125);
-// 			ntx.fillStyle='#0278CC';	
-// 		}
-// 		else{
-// 			var n = document.getElementById(this.id);
-// 			var ntx=n.getContext('2d');
-// 			ntx.fillStyle='#FF0000';
-// 			ntx.fillRect(3%3+amt,0,148,148);
-// 			ntx.fillStyle='#000000';
-// 			ntx.font = "134px Arial"
-// 			ntx.fillText("O",23,125);
-// 			ntx.fillStyle='#FF0000';
-// 		}
-// 	}
-// }
+	return (bot_empty || top_empty);
+}
 
 window.onload = function() {
 	draw();
