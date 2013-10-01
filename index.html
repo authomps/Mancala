@@ -1,0 +1,52 @@
+<!--
+	Unit 6
+	Description: Mancala
+	Date: 09/28/13
+	@author Alexander Broom
+	@author Nick Coats
+	@author Austin Thompson
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="index.css" />
+	<link href='http://fonts.googleapis.com/css?family=Snippet' rel='stylesheet' type='text/css'>
+	<title>Mancala</title>
+	<script type="text/javascript" src="index.js"></script>
+</head>
+
+<body>
+	<div id="wrap">
+		<div id="header">
+			<h1 id="Title">Mancala</h1>
+		</div>
+		<h2 id="p1_title" class="player1" align="center">Player 1's side</h2>
+		<h3 class="player1">Player 1's bank</h3>
+		<div id="game"></div>
+		<h3 class="player2" align="right">Player 2's bank</h3>
+		<h2 id="p2_title" class="player2" align="center">Player 2's side</h2>
+		<h1 id="display" align="center">Player 1's Turn</h1>
+		<br>
+		<div id="controls" text-align="center">
+			<button id="reset" text-align="center">Reset</button>
+		</div>
+		
+		<div id="footer">
+		<h3>Mancala Rules:</h3>
+		<ul>
+		<li>The goal of the game is to get as many beads into your bank as possible. The game is played by "picking up" the beads in one of your houses (by clicking the house)
+		and putting one bead in the next house (counter-clockwise) until you run out of the beads from that house. </li>
+		<li>If your last bead lands in your bank, you get to go again.</li> 
+		<li>Always skip the other player's bank when it is your turn.</li>
+		<li>If your last bead lands in an empty house on your side and if there are any beads in the house across from your last bead, that bead and the beads in the house across from your bead are added to your bank.</li>
+		<li>The game ends when one player's side is out of beads. The player that still has beads left at the end of the game has those beads added to their bank.</li>
+		<li>The player with the most beads in their bank at the end of the game is the winner.</li>
+
+		</ul>
+		</div>
+	</div>
+</body>
+
+</html>
