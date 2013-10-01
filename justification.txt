@@ -6,7 +6,7 @@ Justifications for 100 points
 		Shadow around game board border
 		Rounded corners of borders
 		Tilted text for player bank labels
-		Support for multiple browsers
+		Support for multiple browsers: Safari, Chrome and Firefox
 	
 	Randomization of beads and bead colors was difficult to implement because our tileset had to be recreated to retain visibility of the beads.
 
