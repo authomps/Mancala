@@ -30,9 +30,11 @@ var x_side_max = 115;
 var y_side_min = 50;
 var y_side_max = 269;
 
+
+var board = new Array();
 var houses = new Array();
 for (i=1; i<14; i++) {
-	houses[i] = 4;
+	houses[i] = i;
 }
 houses[0] = 0;
 houses[7] = 0;
@@ -40,6 +42,19 @@ houses[7] = 0;
 // Helper functions
 function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function convertIndex(i) {
+	if(i == 0 || i == 7)  {
+		return i;
+	}
+	else if ( i < 7 ) {
+		return 14 - i;
+	}
+	else {
+		return i - 7;
+	}
+	return board[i];
 }
 
 // Draw board
