@@ -36,18 +36,9 @@ var x_side_max = 115;
 var y_side_min = 50;
 var y_side_max = 269;
 
-// Houses array
-var houses = new Array();
-for (i=1; i<14; i++) {
-	houses[i] = 4;
-}
-houses[0] = 0;
-houses[7] = 0;
-
-// Player turn variable
-var player1_turn = true;
-
-//// Helper functions
+// Gameplay variables
+var houses;
+var player1_turn;
 
 // Generates random integer betwen range min and max
 function getRandomInt (min, max) {
@@ -68,8 +59,25 @@ function convertIndex(i) {
 	return board[i];
 }
 
+// Initilizes board
+function init() {
+	// Initilize number of beads per house
+	houses = new Array();
+	for (i=1; i<14; i++) {
+		houses[i] = 4;
+	}
+	houses[0] = 0;
+	houses[7] = 0;
+
+	// Set turn to player 1
+	player1_turn = true;
+	document.getElementById("display").innerHTML = "Player 1's Turn";
+}
+
 // Draw board
 function draw() {
+	document.getElementById("game").innerHTML = "";
+
 	// Draw each house and store
 	for (i=0; i<14; i++) {
 
@@ -248,7 +256,6 @@ function playerTurn(pos) {
 	}
 
 	// redraw html
-	document.getElementById("game").innerHTML = "";
 	draw();
 }
 
@@ -301,10 +308,22 @@ function checkEmpty() {
 	return (bot_empty || top_empty);
 }
 
+// Called for reset button onclick
+function reset(){
+	init();
+	draw();
+}
+
 // Called when window loads
 window.onload = function() {
 	draw();
 	var game = document.getElementById('game');
 	game.style.maxHeight = "300px";
 	game.style.backgroundImage = "url(" + img_board_background.src + ")";
+
+	//Connect the reset button to its function
+	document.getElementById("reset").onclick = reset;
 };
+
+// Initialize values
+init();
