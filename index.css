@@ -30,6 +30,27 @@ html, body {
 	
 }
 
+#p1bank {
+	margin-top: 0px;
+	margin-left: -2px;
+	margin-bottom: 35px;
+	-webkit-transform:rotate(-3deg);
+}
+
+#p2bank {
+	margin-top: -10px;
+	margin-right: 5px;
+	-webkit-transform:rotate(3deg);
+}
+
+h2 {
+	margin: 0px;
+}
+
+h3 {
+	margin-bottom: 0px;
+}
+
 #game {
 	border: solid #000 5px;
 	box-shadow: 10px 10px 5px #888;

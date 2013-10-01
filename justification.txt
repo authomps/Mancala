@@ -1,0 +1,17 @@
+Justifications for 100 points
+	
+	Visually appealling website using complementary colors.
+	
+	CSS3 Features Implemented
+		Shadow around game board border
+		Rounded corners of borders
+		Tilted text for player bank labels
+	
+	Randomization of beads and bead colors was difficult to implement because our tileset had to be recreated to retain visibility of the beads.
+
+	Good UI Design
+		Red/blue circles offer feedback to the user, clearly showing which objects are clickable and which aren't.
+		Number of beads in each house is displayed as an integer to allow for clear readability in case bead color blends in to background or they overlap.
+		Clear and accessible guide to rules of the game.
+
+	Modular tileset allows for quick design of new board skins by only modifying 4 tiles.
