@@ -148,7 +148,10 @@ function mouse_over() {
 	var ctx = house.getContext('2d');
 
 	if(player1_turn && this.id < 7) {
-		
+		//Display bad image
+	}
+	else if(!player1_turn && this.id > 7) {
+		//Display bad image
 	}
 	else {
 		ctx.drawImage(img_main_focus,0,0);
@@ -170,7 +173,7 @@ function mouse_click() {
 	if(player1_turn && this.id < 7) {
 		//Display error	
 	} 
-	else if(!player1_turn && this.id < 7) {
+	else if(!player1_turn && this.id > 7) {
 		//Display error
 	}
 	else {
@@ -181,22 +184,23 @@ function mouse_click() {
 
 function playerTurn(pos) {
 
+	//Check if valid turn, ie, the selected container has beads
+	if(houses[pos] == 0) {
+		console.log("IDIOT TRY AGAIN");
+		return;
+	}
+
 	var beads = houses[pos];
 	houses[pos] = 0;
 	pos_int = parseInt(pos);
-	//Check if valid turn
-	current_index = (pos_int + 1)%14;
-	console.log(current_index);
-	// current_index = pos;
+
+	current_index = (pos_int + 1)%14;	
 
 	for(i = 0; i < beads; current_index++) {
 		current_index = current_index%14;
-		console.log(!player1_turn);
-		console.log(current_index);
 		//Check if player turn and bank match up
 		if(current_index == 0 && player1_turn) {
 			houses[current_index] += 1;
-			// console.log(current_index);
 			i++;
 		}
 		else if(current_index == 7 && !player1_turn) {
@@ -205,14 +209,53 @@ function playerTurn(pos) {
 		}
 		else if(current_index != 0 && current_index != 7){
 			houses[current_index] += 1;
-			// console.log(current_index);
 			i++;
 		}
-		// current_index++;
 	}
+	checkBonus(current_index-1);
 	document.getElementById("game").innerHTML = "";
 	draw();
 	//Check for end of game
+}
+
+function checkBonus(pos) {
+
+	if(pos == 7 || pos ==0) {
+		return;
+	}
+
+
+	console.log(pos);
+	
+	if(houses[pos] == 1 && houses[14-pos] != 0) {
+		if(player1_turn && pos > 7) {
+			houses[0] += houses[14-pos] + houses[pos];
+			houses[pos] = 0;
+			houses[14-pos] = 0;
+			//MEGA KILL
+		}
+		else if(!player1_turn && pos < 7 ) {
+			houses[7] += houses[14-pos] + houses[pos];
+			houses[pos] = 0;
+			houses[14-pos] = 0;	
+		}
+	}
+
+	player1_turn = !player1_turn;
+}
+
+function checkEmpty() {
+	for(i=1; i < 7; i++) {
+		if(houses[i] != 0) {
+			return false;
+		}
+	}
+	for(i=8; i < 14; i++) {
+		if(houses[i] != 0) {
+			return false;
+		}
+	}
+	return true;
 }
 
 // function pickturn(){
