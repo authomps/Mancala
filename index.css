@@ -35,12 +35,18 @@ html, body {
 	margin-left: -2px;
 	margin-bottom: 35px;
 	-webkit-transform:rotate(-3deg);
+	-moz-transform:rotate(-3deg);
+	-ms-transform:rotate(-3deg);
+	transform:rotate(-3deg);
 }
 
 #p2bank {
 	margin-top: -10px;
 	margin-right: 5px;
 	-webkit-transform:rotate(3deg);
+	-moz-transform:rotate(-3deg);
+	-ms-transform:rotate(-3deg);
+	transform:rotate(-3deg);
 }
 
 h2 {
